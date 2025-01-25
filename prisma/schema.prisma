@@ -1,0 +1,79 @@
+enum Region {
+    AU
+    UK
+    NZ
+    MY
+}
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model users {
+    userid   String @id @default(uuid())
+    email    String @unique
+    name     String
+    password String
+    session  String
+}
+
+model mainSku {
+    id          Int      @id @default(autoincrement())
+    sku         String   @unique
+    description String
+    region      Region[]
+    compute     Int
+    refs        String?
+
+    children   childSku[]
+    vendorSkus vendorSku[]
+}
+
+model childSku {
+    id          Int         @id @default(autoincrement())
+    sku         String      @unique
+    description String
+    region      Region[]
+    compute     Int
+    parentId    String
+    parent      mainSku     @relation(fields: [parentId], references: [sku])
+    vendorSkus  vendorSku[]
+}
+
+model vendor {
+    id          Int         @id @default(autoincrement())
+    name        String
+    description String
+    skus        vendorSku[]
+}
+
+model vendorSku {
+    id         Int    @id @default(autoincrement())
+    vendorId   Int
+    skuId      Int?
+    childSkuId Int?
+    region     Region[]
+    cost       Float
+
+    vendor   vendor    @relation(fields: [vendorId], references: [id])
+    mainSku  mainSku?  @relation(fields: [skuId], references: [id])
+    childSku childSku? @relation(fields: [childSkuId], references: [id])
+
+    @@unique([vendorId, skuId, region])
+    @@unique([vendorId, childSkuId, region])
+}
+
+model quote {
+    id      String   @id @default(uuid())
+    created DateTime
+    updated DateTime
+}
+
+model quoteItems {
+    id Int @id @default(autoincrement())
+}
