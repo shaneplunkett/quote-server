@@ -18,6 +18,9 @@ importers:
         specifier: ^16.10.0
         version: 16.10.0
     devDependencies:
+      '@eslint/js':
+        specifier: ^9.19.0
+        version: 9.19.0
       '@prisma/language-server':
         specifier: ^6.2.0
         version: 6.2.0
@@ -30,6 +33,9 @@ importers:
       eslint-config-prettier:
         specifier: ^10.0.1
         version: 10.0.1(eslint@9.19.0)
+      globals:
+        specifier: ^15.14.0
+        version: 15.14.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -684,6 +690,10 @@ packages:
 
   globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
+    engines: {node: '>=18'}
+
+  globals@15.14.0:
+    resolution: {integrity: sha512-OkToC372DtlQeje9/zHIo5CT8lRP/FUgEOKBEhU4e0abL7J7CD24fD9ohiLN5hagG/kWCYj4K5oaxxtj2Z0Dig==}
     engines: {node: '>=18'}
 
   gopd@1.2.0:
@@ -1920,6 +1930,8 @@ snapshots:
       is-glob: 4.0.3
 
   globals@14.0.0: {}
+
+  globals@15.14.0: {}
 
   gopd@1.2.0: {}
 
