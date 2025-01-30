@@ -15,11 +15,13 @@ datasource db {
 }
 
 model users {
-    userid   String @id @default(uuid())
-    email    String @unique
+    userid   String   @id @default(uuid())
+    email    String   @unique
     name     String
     password String
-    session  String
+    token    String   @unique
+    expiry   DateTime
+    revoked  Boolean  @default(false)
 }
 
 model mainSku {
@@ -53,7 +55,7 @@ model vendor {
 }
 
 model vendorSku {
-    id         Int    @id @default(autoincrement())
+    id         Int      @id @default(autoincrement())
     vendorId   Int
     skuId      Int?
     childSkuId Int?
