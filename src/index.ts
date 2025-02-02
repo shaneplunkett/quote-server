@@ -5,21 +5,29 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 const prisma = new PrismaClient();
 
 const typeDefs = `#graphql
-
-    type MainSku {
-        id: Int
-        sku_id: String 
+type User {
+    userid: String
+    email: String
+    name: String
+    password: String
+    token: String
+    expiry: String
+    revoked: Boolean
     }
 
-    type Query {
-        getMainSkus: [MainSku]
+type Query {
+    getUser(email: String!): User
 }
 `;
 
 const resolvers = {
   Query: {
-    getMainSkus: async () => {
-      return await prisma.mainSku.findMany();
+    getUser: (_, { email }) => {
+      return prisma.user.findUnique({
+        where: {
+          email: email,
+        },
+      });
     },
   },
 };
